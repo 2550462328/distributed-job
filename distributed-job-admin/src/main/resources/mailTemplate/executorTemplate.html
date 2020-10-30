@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tesseract-job 执行器过期报警邮件</title>
+</head>
+<body>
+<#list executorDetailList as executorDetail>
+<div class="containner">
+    <ul>
+        <li>
+            <span>IP：端口:</span>
+            <span class="content">${(executorDetail.socket)!'null'}</span>
+        </li>
+        <li>
+            <span>组名</span>
+            <span class="content">${(executorDetail.groupName)!'null'}</span>
+        </li>
+    </ul>
+</div>
+</
+#list>
+
+</body>
+<style type="text/css">
+    ul {
+        list-style: none;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+
+    .content {
+        margin-left: 15px;
+    }
+</style>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhanghui.mapper.TesseractLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zhanghui.entity.TesseractLog">
+        <id column="id" property="id" />
+        <result column="trigger_name" property="triggerName" />
+        <result column="class_name" property="className" />
+        <result column="group_name" property="groupName" />
+        <result column="group_id" property="groupId" />
+        <result column="socket" property="socket" />
+        <result column="status" property="status" />
+        <result column="msg" property="msg" />
+        <result column="creator" property="creator" />
+        <result column="create_time" property="createTime" />
+        <result column="end_time" property="endTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, trigger_name, class_name, group_name, group_id, socket, status, msg, creator, create_time, end_time
+    </sql>
+
+</mapper>

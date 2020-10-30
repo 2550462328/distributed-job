@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Tesseract-Job 日志</title>
+</head>
+<body>
+<div class="containner">
+    <ul>
+        <li>
+            <span>日志id:</span>
+            <span class="content">${(log.id)!'null'}</span>
+        </li>
+        <li>
+            <span>类名</span>
+            <span class="content">${(log.className)!'null'}</span>
+        </li>
+        <li>
+            <span>触发器名字</span>
+            <span class="content">${(log.triggerName)!'null'}</span>
+        </li>
+        <li>
+            <span>设置失败重试次数</span>
+            <span class="content">${(tesseractTrigger.retryCount)!'null'}</span>
+        </li>
+        <li>
+            <span>目前失败重试次数</span>
+            <span class="content">${(tesseractFiredJob.retryCount)!'null'}</span>
+        </li>
+        <li>
+            <span>执行地址</span>
+            <span class="content">${(log.socket)!'null'}</span>
+        </li>
+        <li>
+            <span>状态</span>
+            <span class="content">${(log.status)!'null'}</span>
+        </li>
+        <li>
+            <span>信息</span>
+            <span class="content">${(log.msg)!'null'}</span>
+        </li>
+        <li>
+            <span>创建者</span>
+            <span class="content">${(log.creator)!'null'}</span>
+        </li>
+        <li>
+            <span>创建时间</span>
+            <span class="content">${(createTime)!'null'}</span>
+        </li>
+        <li>
+            <span>结束时间</span>
+            <span class="content">${(endTime)!'null'}</span></li>
+        <li>
+            <span>组名</span>
+            <span class="content">${(log.groupName)!'null'}</span>
+        </li>
+
+    </ul>
+</div>
+</body>
+<style type="text/css">
+    ul {
+        list-style: none;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+
+    .content {
+        margin-left: 15px;
+    }
+</style>
+</html>
