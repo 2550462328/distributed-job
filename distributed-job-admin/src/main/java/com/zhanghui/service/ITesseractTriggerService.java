@@ -17,5 +17,7 @@ import java.util.List;
 public interface ITesseractTriggerService extends IService<TesseractTrigger> {
     List<TesseractTrigger> findTriggerWithLock(String groupName, int triggerSize, long time, Integer timeWindowSize);
 
+    List<TesseractTrigger> findTriggerWithLockInCache(String groupName, int triggerSize, long time, Integer timeWindowSize);
+
     Integer findIfExistsByWrapper(QueryWrapper<TesseractTrigger> wrapper);
 }

@@ -2,6 +2,7 @@ package com.zhanghui.core;
 
 import com.zhanghui.core.bean.SchedulerGroupInfo;
 import com.zhanghui.core.cache.ExecutorDetailCache;
+import com.zhanghui.core.cache.TriggerMongoCache;
 import com.zhanghui.core.cache.TriggerRedisCache;
 import com.zhanghui.core.executor.TaskExecuteDelegator;
 import com.zhanghui.core.scanner.ExecutorScanner;
@@ -56,7 +57,7 @@ public class JobServerBootstrap {
     private IAdminFeignService feignService;
 
     @Autowired
-    private TriggerRedisCache triggerRedisCache;
+    private TriggerMongoCache triggerMongoCache;
 
     private ServiceCheckScanner serviceCheckScanner;
 
@@ -102,7 +103,7 @@ public class JobServerBootstrap {
         JobServiceDelegator.logService = logService;
         JobServiceDelegator.triggerService = triggerService;
         JobServiceDelegator.feignService = feignService;
-        JobServiceDelegator.triggerRedisCache = triggerRedisCache;
+        JobServiceDelegator.triggerMongoCache = triggerMongoCache;
     }
 
     private void initSchedulerGroupInfo() {
@@ -134,9 +135,6 @@ public class JobServerBootstrap {
         if(group == null || group.getThreadPoolNum() == 0){
             return null;
         }
-
-        String groupName = group.getName();
-        Integer threadPoolNum = group.getThreadPoolNum();
 
         // 每一个组创建一个trigger调度器，可以理解成一个任务调度器，里面有一个线程池，负责处理trigger的任务
         TesseractTriggerDispatcher tesseractTriggerDispatcher = new TesseractTriggerDispatcher(group);

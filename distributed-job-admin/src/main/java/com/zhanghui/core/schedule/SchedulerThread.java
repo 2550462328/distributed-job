@@ -66,7 +66,7 @@ public class SchedulerThread extends Thread implements IThreadLifycycle {
         while (!isStop) {
             int blockGetAvailableThreadnum = tesseractTriggerDispatcher.blockGetAvailableThreadNum();
 
-            List<TesseractTrigger> triggerList = tesseractTriggerService.findTriggerWithLock(tesseractGroup.getName(), blockGetAvailableThreadnum, System.currentTimeMillis(), TIME_WINDOW_SIZE);
+            List<TesseractTrigger> triggerList = tesseractTriggerService.findTriggerWithLockInCache(tesseractGroup.getName(), blockGetAvailableThreadnum, System.currentTimeMillis(), TIME_WINDOW_SIZE);
 
             if (!CollectionUtils.isEmpty(triggerList)) {
                 // 选取最近触发的一个trigger

@@ -6,6 +6,7 @@ import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.zhanghui.core.JobServerBootstrap;
+import com.zhanghui.core.cache.TriggerMongoCache;
 import com.zhanghui.core.cache.TriggerRedisCache;
 import com.zhanghui.core.listener.MailListener;
 import com.zhanghui.core.mail.TesseractMailTemplate;
@@ -66,6 +67,11 @@ public class AdminConfig {
         IAdminFeignService iAdminFeignService = Feign.builder().encoder(encoder).decoder(decoder).options(options)
                 .target(Target.EmptyTarget.create(IAdminFeignService.class));
         return iAdminFeignService;
+    }
+
+    @Bean
+    public TriggerMongoCache triggerMongoCache(){
+        return new TriggerMongoCache();
     }
 
     @Bean

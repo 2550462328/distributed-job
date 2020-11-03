@@ -24,7 +24,7 @@ import static com.zhanghui.core.constant.CommonConstant.*;
 @RestController
 @RequestMapping("/tesseract-job-detail")
 public class TesseractJobDetailController {
-
+    
     @Autowired
     private ITesseractJobDetailService jobDetailService;
 

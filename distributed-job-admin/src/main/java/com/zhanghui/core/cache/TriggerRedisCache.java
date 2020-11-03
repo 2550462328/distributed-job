@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 /**
- * 提供对trigger的cache操作
+ * 基于Redis提供对trigger的cache操作
+ *
+ * Deprecated 用不到
  * @author: ZhangHui
  * @date: 2020/10/29 11:53
  * @version：1.0
  */
+@Deprecated
 public class TriggerRedisCache {
 
     @Autowired

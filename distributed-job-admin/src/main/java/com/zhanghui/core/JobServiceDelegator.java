@@ -1,5 +1,6 @@
 package com.zhanghui.core;
 
+import com.zhanghui.core.cache.TriggerMongoCache;
 import com.zhanghui.core.cache.TriggerRedisCache;
 import com.zhanghui.service.*;
 import feignService.IAdminFeignService;
@@ -28,5 +29,5 @@ public class JobServiceDelegator {
 
     public static IAdminFeignService feignService;
 
-    public static TriggerRedisCache triggerRedisCache;
+    public static TriggerMongoCache triggerMongoCache;
 }

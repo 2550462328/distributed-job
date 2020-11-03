@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.zhanghui.core.JobServerBootstrap;
 import com.zhanghui.core.JobServiceDelegator;
 import com.zhanghui.core.cache.ExecutorDetailCache;
+import com.zhanghui.core.cache.TriggerMongoCache;
 import com.zhanghui.core.cache.TriggerRedisCache;
 import com.zhanghui.core.lifestyle.IThreadLifycycle;
 import com.zhanghui.entity.TesseractExecutorDetail;
@@ -38,7 +39,7 @@ public class ServiceCheckScanner extends Thread implements IThreadLifycycle {
 
     private final ITesseractGroupService tesseractGroupService = JobServiceDelegator.groupService;
     private final ITesseractTriggerService tesseractTriggerService = JobServiceDelegator.triggerService;
-    private final TriggerRedisCache triggerRedisCache = JobServiceDelegator.triggerRedisCache;
+    private final TriggerMongoCache triggerMongoCache = JobServiceDelegator.triggerMongoCache;
 
     public ServiceCheckScanner() {
         super(THREAD_NAME);
@@ -85,8 +86,8 @@ public class ServiceCheckScanner extends Thread implements IThreadLifycycle {
                         // 删除group下的groupScheduler线程组
                         JobServerBootstrap.deleteGroupScheduler(groupName);
 
-                        // 删除group下的redis缓存
-//                        triggerRedisCache.removeAllTriggerFromCache(groupName);
+                        // 删除group下的mongodb缓存
+                        triggerMongoCache.removeAllTriggerFromCache(groupName);
                     });
                     removeGroupIds.clear();
                     removeGroupNames.clear();

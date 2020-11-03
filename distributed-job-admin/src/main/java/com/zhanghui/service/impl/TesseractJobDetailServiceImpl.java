@@ -3,6 +3,7 @@ package com.zhanghui.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
 import com.zhanghui.core.JobServiceDelegator;
+import com.zhanghui.core.cache.TriggerMongoCache;
 import com.zhanghui.core.cache.TriggerRedisCache;
 import com.zhanghui.core.constant.OperateResult;
 import com.zhanghui.core.dto.TesseractAdminJobDetailDTO;
@@ -21,6 +22,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhanghui.service.ITesseractTriggerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import static com.zhanghui.core.constant.CommonConstant.*;
@@ -48,7 +50,8 @@ public class TesseractJobDetailServiceImpl extends ServiceImpl<TesseractJobDetai
     @Autowired
     private ITesseractGroupService groupService;
 
-    private TriggerRedisCache triggerRedisCache = JobServiceDelegator.triggerRedisCache;
+    @Autowired
+    private TriggerMongoCache triggerMongoCache;
 
     private static final int PROCESSOR_RUNTIME = 5 * 1000;
 
@@ -94,9 +97,8 @@ public class TesseractJobDetailServiceImpl extends ServiceImpl<TesseractJobDetai
                 }
             } catch (Exception e) {
                 String errorMessage = String.format("注册jobDetail出现异常:[%s]", e.getMessage());
-                TesseractAdminRegistryFailInfo registryFailInfo = buildRegistryFailInfo(jobDetailDTO, SERVER_ERROR, errorMessage);
-
                 log.error(errorMessage, e.getCause());
+                TesseractAdminRegistryFailInfo registryFailInfo = buildRegistryFailInfo(jobDetailDTO, SERVER_ERROR, errorMessage);
                 notRegistryJobList.add(registryFailInfo);
             }
         });
@@ -177,9 +179,8 @@ public class TesseractJobDetailServiceImpl extends ServiceImpl<TesseractJobDetai
             return operateResult;
         }
 
-        //保存Trigger到redis缓存
-//        triggerRedisCache.addTriggerToCache(tesseractTrigger);
-
+        //保存Trigger到mongodb缓存
+        triggerMongoCache.addTriggerToCache(tesseractTrigger);
         return saveJobDetail(tesseractTrigger, jobDetailDTO);
     }
 
