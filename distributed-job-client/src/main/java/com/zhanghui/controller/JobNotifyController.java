@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * @author: ZhangHui
  * @date: 2020/10/22 17:10
@@ -17,12 +19,11 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @ControllerAdvice
-@Validated
 @Slf4j
 public class JobNotifyController {
 
     @RequestMapping(CommonConstant.EXECUTE_MAPPING)
-    public TesseractExecutorResponse executeJob(@Validated @RequestBody TesseractExecutorRequest tesseractExecutorRequest) {
+    public TesseractExecutorResponse executeJob(@Valid @RequestBody TesseractExecutorRequest tesseractExecutorRequest) {
         return JobExecuteDelegator.execute(tesseractExecutorRequest);
     }
 

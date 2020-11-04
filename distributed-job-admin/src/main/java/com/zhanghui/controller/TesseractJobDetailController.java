@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+
 import static com.zhanghui.core.constant.CommonConstant.*;
 
 /**
@@ -29,7 +32,7 @@ public class TesseractJobDetailController {
     private ITesseractJobDetailService jobDetailService;
 
     @RequestMapping(REGISTRY_MAPPING_SUFFIX)
-    public TesseractExecutorResponse registry(@Validated @RequestBody TesseractAdminRegistryRequest tesseractAdminRegistryRequest) throws Exception {
+    public TesseractExecutorResponse registry(@Valid @RequestBody TesseractAdminRegistryRequest tesseractAdminRegistryRequest) throws Exception {
         TesseractAdminRegistryResDTO registryResp = jobDetailService.registry(tesseractAdminRegistryRequest);
         TesseractExecutorResponse success = new TesseractExecutorResponse(TesseractExecutorResponse.SUCCESS_STATUS, registryResp);
         return success;

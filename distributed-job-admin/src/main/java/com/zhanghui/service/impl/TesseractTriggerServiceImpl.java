@@ -101,8 +101,6 @@ public class TesseractTriggerServiceImpl extends ServiceImpl<TesseractTriggerMap
     @Override
     public List<TesseractTrigger> findTriggerWithLockInCache(String groupName, int triggerSize, long time, Integer timeWindowSize) {
         // 一个trigger事件只能触发一次，避免分布式环境下多个服务端同时拿到同一个trigger
-        lockService.lock(TRIGGER_LOCK_NAME, groupName);
-
         RedissLockUtil.lock(groupName);
 
         try {
@@ -132,6 +130,9 @@ public class TesseractTriggerServiceImpl extends ServiceImpl<TesseractTriggerMap
         return this.baseMapper.findIfExistsByWrapper(wrapper);
     }
 
+    /**
+     * 计算下一次触发时间
+     */
     private List<TesseractTrigger> calculateNextTrigger(List<TesseractTrigger> prevTriggerList) {
         List<TesseractTrigger> updateTriggerList = Lists.newArrayList();
         prevTriggerList.parallelStream().forEach(trigger -> {

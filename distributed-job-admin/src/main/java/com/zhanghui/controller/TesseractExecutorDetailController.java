@@ -23,7 +23,6 @@ import static com.zhanghui.core.constant.CommonConstant.*;
  * @author zhanghui
  * @since 2020-10-20
  */
-@Validated
 @RestController
 @RequestMapping("/tesseract-executor-detail")
 public class TesseractExecutorDetailController {
@@ -32,7 +31,7 @@ public class TesseractExecutorDetailController {
     private ITesseractExecutorDetailService executorDetailService;
 
     @RequestMapping(HEARTBEAT_MAPPING_SUFFIX)
-    public TesseractExecutorResponse heartBeat(@Validated @RequestBody TesseractHeartbeatRequest heartBeatRequest) {
+    public TesseractExecutorResponse heartBeat(@Valid @RequestBody TesseractHeartbeatRequest heartBeatRequest) {
         executorDetailService.heartBeat(heartBeatRequest);
         return TesseractExecutorResponse.SUCCESS;
     }

@@ -24,10 +24,6 @@ public class SchedulerGroupInfo {
         return schedulerThread;
     }
 
-    public ExecutorScanner getExecutorScanner() {
-        return executorScanner;
-    }
-
     public void startSchedule(){
         if(this.schedulerThread!=null){
             schedulerThread.startThread();

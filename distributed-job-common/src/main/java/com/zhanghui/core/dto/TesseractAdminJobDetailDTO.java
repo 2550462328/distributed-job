@@ -12,7 +12,7 @@ public class TesseractAdminJobDetailDTO {
     private String className;
     @NotBlank
     private String triggerName;
-
+    @NotBlank
     private String groupName;
 
     private String cron;

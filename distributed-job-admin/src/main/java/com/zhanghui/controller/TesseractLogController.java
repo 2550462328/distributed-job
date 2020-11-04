@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+
 import static com.zhanghui.core.constant.CommonConstant.*;
 
 /**
@@ -28,7 +31,7 @@ public class TesseractLogController {
     public ITesseractLogService logService;
 
     @RequestMapping(NOTIFY_MAPPING_SUFFIX)
-    private TesseractExecutorResponse notify(@Validated @RequestBody TesseractAdminJobNotify tesseractAdminJobNotify) {
+    private TesseractExecutorResponse notify(@Valid @RequestBody TesseractAdminJobNotify tesseractAdminJobNotify) {
         if(tesseractAdminJobNotify.getLogId() != null) {
             logService.notify(tesseractAdminJobNotify);
         }

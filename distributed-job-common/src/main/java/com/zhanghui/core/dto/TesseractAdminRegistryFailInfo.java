@@ -3,8 +3,6 @@ package com.zhanghui.core.dto;
 import lombok.Data;
 import lombok.ToString;
 
-import javax.validation.constraints.NotBlank;
-
 /**
  * @author: ZhangHui
  * @date: 2020/10/28 13:01
@@ -19,4 +17,12 @@ public class TesseractAdminRegistryFailInfo {
    private Integer errorCode;
 
    private String errorMessage;
+
+   public static TesseractAdminRegistryFailInfo build(TesseractAdminJobDetailDTO jobDetailDTO, int errorCode, String errorMessage) {
+      TesseractAdminRegistryFailInfo registryFailInfo = new TesseractAdminRegistryFailInfo();
+      registryFailInfo.setJobDetailDTO(jobDetailDTO);
+      registryFailInfo.setErrorCode(errorCode);
+      registryFailInfo.setErrorMessage(errorMessage);
+      return registryFailInfo;
+   }
 }

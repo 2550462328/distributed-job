@@ -83,7 +83,7 @@ public class TaskExecuteDelegator {
         }else if(executorDetailList.size() == 1){
             return executorDetailList.get(0);
         }else if(executorDetail == preExecutor){
-            scheduleRouter.routerExecutor(taskContextInfo.getExecutorDetailList());
+            executorDetail = scheduleRouter.routerExecutor(taskContextInfo.getExecutorDetailList());
         }
         return executorDetail;
     }

@@ -34,7 +34,6 @@ public class RegistryJobThread extends Thread implements IThreadLifycycle {
     private static final int REGISTRY_INTEVAL_TIME = 3 * 1000;
 
     // todo admin端所有的配置都可以由用户指定
-
     private static final int REPEAT_REGISTRY_TIMES = 2 * 1000;
 
     private final IClientFeignService clientFeignService = JobServiceDelegator.clientFeignService;

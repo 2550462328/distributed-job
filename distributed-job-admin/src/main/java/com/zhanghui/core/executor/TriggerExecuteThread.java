@@ -66,6 +66,7 @@ public class TriggerExecuteThread implements Runnable {
         // 保存触发器执行情况
         TesseractFiredTrigger tesseractFiredTrigger = saveFiredTrigger();
 
+        // 是否进行日志追踪
         if (isLog) {
             executorRequest.setLogId(tesseractLog.getId());
         }
@@ -141,6 +142,7 @@ public class TriggerExecuteThread implements Runnable {
         } catch (Exception e) {
             log.error("出现调度异常:[{}]", e.getMessage(), e.getCause());
             response = TesseractExecutorResponse.builder().body(e.getMessage()).status(TesseractExecutorResponse.FAIL_STAUTS).build();
+
             // 是否重试
             if (isRetryAble()) {
                 response = retryRequest(executorRequest);

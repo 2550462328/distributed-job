@@ -46,8 +46,6 @@ public class TesseractExecutorDetailServiceImpl extends ServiceImpl<TesseractExe
 
     private final static double MAX_LOADFACTOR = 0.9;
 
-    private final static double CHANAGE_INTERVAL = 0.3;
-
     @Override
     public List<TesseractExecutorDetail> listInvalid() {
         long currentTimeMillis = System.currentTimeMillis();
@@ -57,13 +55,15 @@ public class TesseractExecutorDetailServiceImpl extends ServiceImpl<TesseractExe
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void heartBeat(TesseractHeartbeatRequest heartBeatRequest) {
         String socket = heartBeatRequest.getSocket();
+        // 从缓存中拿
         ExecutorDetailHolder cacheExecutor = jobServerBootstrap.getExecutorDetailCache().getCacheExecutor(socket);
 
         ExecutorDetailHolder executorDetailHolder = new ExecutorDetailHolder(calculateLoadFactor(heartBeatRequest));
 
+        // 缓存中有的情况下 进行批量更新
         if (cacheExecutor != null) {
             QueryWrapper<TesseractExecutorDetail> executorDetailQueryWrapper = new QueryWrapper<>();
             executorDetailQueryWrapper.lambda().eq(TesseractExecutorDetail::getSocket, socket);
@@ -80,9 +80,10 @@ public class TesseractExecutorDetailServiceImpl extends ServiceImpl<TesseractExe
             });
 
             this.updateBatchById(executorDetailList);
-        } else {
+        } else { // 进行批量插入
             List<TesseractExecutorDetail> executorDetailList = batchCreateExecutorDetail(heartBeatRequest.getClientJobGroups(), executorDetailHolder, socket);
             if (this.saveBatch(executorDetailList)) {
+                // 插入缓存
                 jobServerBootstrap.getExecutorDetailCache().addCacheExecutor(socket, executorDetailHolder);
             }
         }
@@ -103,10 +104,8 @@ public class TesseractExecutorDetailServiceImpl extends ServiceImpl<TesseractExe
                 return;
             }
 
-            TesseractExecutorDetail executorDetail = new TesseractExecutorDetail();
-
             // 新增executorDetail
-            executorDetail = new TesseractExecutorDetail();
+            TesseractExecutorDetail executorDetail = new TesseractExecutorDetail();
             executorDetail.setLoadFactor(executorDetailHolder.get());
             executorDetail.setCreateTime(System.currentTimeMillis());
             executorDetail.setUpdateTime(System.currentTimeMillis());
@@ -130,6 +129,7 @@ public class TesseractExecutorDetailServiceImpl extends ServiceImpl<TesseractExe
         } else if (poolMessaure == 1) {
             return MAX_LOADFACTOR;
         } else {
+            // 保留一位小数
             return new BigDecimal(poolMessaure).setScale(1, BigDecimal.ROUND_CEILING).doubleValue();
         }
     }
